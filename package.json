@@ -1,44 +1,28 @@
 {
-  "name": "hrm-12",
+  "name": "vyara-hr-workspace",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
+  "workspaces": [
+    "frontend",
+    "backend"
+  ],
   "type": "module",
   "scripts": {
-    "dev": "vite --port 5173 --host 0.0.0.0 --strictPort",
-    "build": "tsc -b && vite build",
-    "lint": "eslint .",
-    "preview": "vite preview"
-  },
-  "dependencies": {
-    "@emailjs/browser": "^4.4.1",
-    "@supabase/supabase-js": "^2.99.1",
-    "@types/react-is": "^19.2.0",
-    "clsx": "^2.1.1",
-    "jspdf": "^4.2.0",
-    "lucide-react": "^0.577.0",
-    "react": "^19.2.4",
-    "react-dom": "^19.2.4",
-    "react-is": "^19.2.4",
-    "react-router-dom": "^7.13.1",
-    "recharts": "^3.8.0",
-    "tailwind-merge": "^3.5.0"
+    "dev": "concurrently -n \"API,WEB\" -c \"cyan,magenta\" \"npm --workspace=backend run dev\" \"npm --workspace=frontend run dev\"",
+    "dev:frontend": "npm --workspace=frontend run dev",
+    "dev:backend": "npm --workspace=backend run dev",
+    "build": "npm --workspace=frontend run build",
+    "lint": "npm --workspace=frontend run lint",
+    "preview": "npm --workspace=frontend run preview",
+    "server": "npm --workspace=backend run start",
+    "server:dev": "npm --workspace=backend run dev",
+    "package:hostinger": "node scripts/package_hostinger.mjs",
+    "prisma:generate": "npm --workspace=backend run prisma:generate",
+    "prisma:pull": "npm --workspace=backend run prisma:pull",
+    "prisma:studio": "npm --workspace=backend run prisma:studio"
   },
   "devDependencies": {
-    "@eslint/js": "^9.39.4",
-    "@tailwindcss/vite": "^4.2.1",
-    "@types/node": "^24.12.0",
-    "@types/react": "^19.2.14",
-    "@types/react-dom": "^19.2.3",
-    "@vitejs/plugin-react": "5.2.0",
-    "autoprefixer": "^10.4.27",
-    "eslint": "^9.39.4",
-    "eslint-plugin-react-hooks": "^7.0.1",
-    "eslint-plugin-react-refresh": "^0.5.2",
-    "globals": "^17.4.0",
-    "postcss": "^8.5.8",
-    "tailwindcss": "^4.2.1",
-    "typescript": "~5.9.3",
-    "typescript-eslint": "^8.56.1",
-    "vite": "^7.2.2"
+    "archiver": "^8.0.0",
+    "concurrently": "^10.0.6"
   }
 }

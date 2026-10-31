@@ -27,3 +27,21 @@ dist-ssr
 .env
 .env.*
 !.env.example
+*.env.local
+backend/.env
+
+# Local Storage Uploads
+backend/uploads/
+uploads/
+logs/
+*.log
+
+# Temporary & Generated Artifacts
+.playwright-mcp/
+bundle/
+*.zip
+scratch_*.cjs
+scratch_*.js
+scratch_*.mjs
+*_validated.png
+mobile_drawer_open.png

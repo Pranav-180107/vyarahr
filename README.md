@@ -1,73 +1,82 @@
-# React + TypeScript + Vite
+# Vyara HR - Architecture & Workspace Guide
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Vyara HR is organized into separate `frontend` and `backend` packages using an npm workspaces monorepo structure.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## 📁 Project Structure
 
-## React Compiler
-
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```text
+Vyara HR/
+├── frontend/                     # Client-side React 19 + Vite application
+│   ├── public/                   # Static assets (logos, icons, favicons)
+│   ├── src/                      # UI components, pages, context, hooks, services
+│   ├── index.html                # Vite HTML entry point
+│   ├── vite.config.ts            # Vite bundler & proxy configuration
+│   ├── tsconfig.json             # TypeScript configuration
+│   ├── eslint.config.js          # Linter configuration
+│   ├── package.json              # Frontend dependencies (React, Lucide, Recharts, etc.)
+│   └── .env                      # Frontend environment variables (VITE_*)
+│
+├── backend/                      # Backend database & serverless infrastructure
+│   ├── prisma/                   # Prisma ORM models & schema
+│   │   └── schema.prisma
+│   ├── supabase/                 # Supabase configuration, migrations & edge functions
+│   │   ├── config.toml           # Supabase CLI settings
+│   │   ├── functions/            # Supabase Edge Functions (create-employee, send-email)
+│   │   └── migrations/           # PostgreSQL migrations & RLS policies
+│   ├── package.json              # Backend dependencies (Prisma CLI & scripts)
+│   └── .env                      # Backend database credentials (DATABASE_URL, DIRECT_URL)
+│
+├── docs/                         # Reference scripts, documentation, and SQL utilities
+│   └── fix_trigger.sql           # Reference database trigger script
+│
+├── package.json                  # Root monorepo workspace configuration
+├── vercel.json                   # Vercel deployment configuration
+└── .gitignore                    # Git ignore rules for monorepo
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+---
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## 🚀 Quick Start Commands
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+You can run all commands directly from the **project root**:
+
+### Frontend
+- **Start Development Server**:
+  ```bash
+  npm run dev
+  ```
+- **Build for Production**:
+  ```bash
+  npm run build
+  ```
+- **Preview Production Build**:
+  ```bash
+  npm run preview
+  ```
+- **Lint Code**:
+  ```bash
+  npm run lint
+  ```
+
+### Backend & Database (Prisma & Supabase)
+- **Generate Prisma Client**:
+  ```bash
+  npm run prisma:generate
+  ```
+- **Pull Database Schema**:
+  ```bash
+  npm run prisma:pull
+  ```
+- **Open Prisma Studio UI**:
+  ```bash
+  npm run prisma:studio
+  ```
+
+---
+
+## 🔐 Environment Variables
+
+- **Frontend Variables**: Located in `frontend/.env` (safe client-side variables prefixed with `VITE_`).
+- **Backend Variables**: Located in `backend/.env` (contains direct PostgreSQL connection URLs and pooler credentials).
